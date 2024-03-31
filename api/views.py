@@ -2,20 +2,21 @@
 from audioop import reverse
 import os
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import Tab_aux
 
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 import openpyxl
 import pandas as pd
 from io import BytesIO
+from .forms import TabAuxForm
 from api.utils.functions import *
 
 
 def api(request):
     return render(request, 'index.html')
     #return HttpResponse("Hello world!")
-
 
 def download_excel(request):
     # Assuming you have some content to put in the Excel file
@@ -95,11 +96,86 @@ def handle_files(request):
         return render(request, 'index.html', context)
     return render(request, 'index.html') 
 
+# change 
+def add_tab_aux(request): 
+    
+     if request.method == 'POST':
+        # intialize a form with the data submitted in the request 
+        form = TabAuxForm(request.POST)
+        # if the form data is valid we save the data in the databse 
+        if form.is_valid():
+            form.save()
+            return redirect('success_page')  # Redirect to a success page
+        else:
+            pass
+     # when the user first loads the form page   
+     else:
+        # this creates an emty form instance 
+        form = TabAuxForm()
+     # we pass the emty form instance to the html template, now the template is available for redering 
+     return render(request, 'form.html', {'form': form})
 
-
-
+def tab_aux_success(request): 
+    return render(request, 'success.html')
        
+# Display a list of the tab_aux 
+def tab_aux_list(request):
+    tab_aux_instances = Tab_aux.objects.all()
+    return render(request, 'list.html', {'tab_aux_instances': tab_aux_instances})
 
+def tab_aux_delete(request, pk):
+   instance = get_object_or_404 (Tab_aux, pk=pk)
+   if request.method == 'POST':
+       instance.delete()
+       return redirect('tab_aux_list')
+   
+def tab_aux_edit(request, pk):
+    instance = get_object_or_404(Tab_aux, pk=pk)
+    if request.method == 'POST':
+        form = TabAuxForm(request.POST,instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('tab_aux_list')
+        else: 
+            pass
+    else:
+        form = TabAuxForm(instance=instance)
+    return render(request,'edit.html',{'form':form})        
 
+def index(request): 
+    return render(request, 'index.html')
+
+def listAffilie(request): 
+    return render(request, 'listAffilie.html')
+
+def listNts(request): 
+    return render(request, 'listNts.html')
+
+def listBanque(request): 
+    return render(request, 'listBanque.html')
+
+def listCoffre(request): 
+    return render(request, 'listCoffre.html')
+
+def addAffilie(request): 
+    return render(request, 'addAffilie.html')
+
+def addNts(request): 
+    return render(request, 'addNts.html')
+
+def addCoffre(request): 
+    return render(request, 'listCoffre.html')
+
+def addBanque(request): 
+    return render(request, 'listBanque.html')
+
+def cbl(request): 
+    return render(request, 'cbl.html')
+
+def banque(request): 
+    return render(request, 'banque.html')
+
+def coffre(request): 
+    return render(request, 'coffre.html')
 
 

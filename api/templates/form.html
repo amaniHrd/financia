@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to tab_aux</title>
+</head>
+<body>
+    <form method="post">
+         <!-- inlcude this line will generate a csrf (CROSS-SITE REQUEST FORGERY) token for each user session to prevent unauthorized form requests from being processed to prevent Cross-site request Forgery  -->
+        {% csrf_token %}
+         <!-- this code will automatically generates the html tags for each form field -->
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+       
+    </form>
+    
+</body>
+</html>

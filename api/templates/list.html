@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>List of  Tab aux </h1>
+  
+    <ul>
+        {% for instance in tab_aux_instances %}
+        <li>{{instance.code}} - {{instance.libelle}}
+        <form method= "POST" action="{% url 'tab_aux_delete' instance.id %}" style="display:inline;" >
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        <a href="{% url 'tab_aux_edit' instance.pk %}">Edit</a>
+    </li>
+        {% endfor %}
+
+    </ul>
+
+    
+</body>
+</html>
