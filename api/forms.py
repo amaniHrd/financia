@@ -5,8 +5,15 @@ from .models import Tab_aux
 
 class TabAuxForm(forms.ModelForm): 
     class Meta:
-        model = Tab_aux
+        model = Tab_aux 
         fields = ['code', 'libelle']
+        # to add style 
+        widgets = {
+            'code': forms.TextInput(attrs= {'class': 'form-control'}), 
+            'libelle': forms.TextInput(attrs= {'class': 'form-control'}),
+            
+        }
+
 
 '''
 Using form linked to my model will validate the model field types and constraints 

@@ -149,7 +149,9 @@ def listAffilie(request):
     return render(request, 'listAffilie.html')
 
 def listNts(request): 
-    return render(request, 'listNts.html')
+    tab_aux_instances = Tab_aux.objects.all()
+    return render(request, 'listNts.html', {'tab_aux_instances': tab_aux_instances})
+  
 
 def listBanque(request): 
     return render(request, 'listBanque.html')
@@ -161,13 +163,93 @@ def addAffilie(request):
     return render(request, 'addAffilie.html')
 
 def addNts(request): 
-    return render(request, 'addNts.html')
+    if request.method == 'POST':
+        form = TabAuxForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listNts') 
+        else:
+            pass 
+    else:
+        form = TabAuxForm()
+    return render(request, 'addNts.html', {'form': form})
+
+def deleteNts (request, pk):
+       instance = get_object_or_404 (Tab_aux, pk=pk)
+       if request.method == 'POST':
+        instance.delete()
+       return redirect('listNts')
+
+def editNts(request, pk):
+    instance = get_object_or_404(Tab_aux, pk=pk)
+    if request.method == 'POST':
+        form = TabAuxForm(request.POST,instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('listNts')
+        else: 
+            pass
+    else:
+        form = TabAuxForm(instance=instance)
+    return render(request,'editNts.html',{'form':form}) 
+
+    
+def submitCbl(request):
+
+    if request.method == 'POST':
+        billet = request.FILES.get('fileInput1')
+        fact = request.FILES.get('fileInput2')
+
+        # Check if any file is selected
+        if not any([billet, fact]):
+            # Redirect to the same page or return an appropriate response
+            return render(request, 'cbl.html')
+
+        billet_file = pd.read_excel(billet)
+        fact_file = pd.read_excel(fact)
+ 
+        # this function returns the created excel files 
+        #journal17_workbook,rapprochement_workbook = create_journal_17(billet_file, fact_file)
+        # create an empty excel file 
+        journal17_workbook = openpyxl.Workbook()
+        rapprochement_workbook = openpyxl.Workbook()
+        # Save the journal17 workbook content to a BytesIO object
+        excel_data = BytesIO()
+        journal17_workbook.save(excel_data)
+        # was excel_content 
+        excel_data.seek(0)
+
+        # Save the rapprochement workbook content to a BytesIO object
+        rap_data = BytesIO()
+        rapprochement_workbook.save(rap_data)
+        # was excel_content 
+        rap_data.seek(0)
+
+        # Save the journal 17 Excel file on the server
+        file_path = os.path.join(settings.MEDIA_ROOT, 'journal17.xlsx')
+        with open(file_path, 'wb') as file:
+            file.write(excel_data.getvalue())
+
+        # Save the rapprochement Excel file on the server
+        rap_path = os.path.join(settings.MEDIA_ROOT, 'rapprochement.xlsx')
+        with open(rap_path, 'wb') as file:
+            file.write(rap_data.getvalue())
+
+
+        file1_link ='/download-excel/'  
+        file2_link = '/download-rap/'
+        context = {'file1_link': file1_link, 'file2_link':file2_link}
+
+        return render(request, 'cbl.html', context)
+    return render(request, 'cbl.html')    
+    
+
 
 def addCoffre(request): 
-    return render(request, 'listCoffre.html')
+    return render(request, 'addCoffre.html')
 
 def addBanque(request): 
-    return render(request, 'listBanque.html')
+    return render(request, 'addBanque.html')
 
 def cbl(request): 
     return render(request, 'cbl.html')

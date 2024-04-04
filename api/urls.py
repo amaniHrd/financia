@@ -26,9 +26,19 @@ urlpatterns = [
     path('coffre', views.coffre, name='coffre'),
     # add 
     path('addAffilie', views.addAffilie, name='addAffilie'),
-    path('addNts', views.addAffilie, name='addNts'),
+    path('addNts', views.addNts, name='addNts'),
     path('addBanque', views.addBanque, name='addBanque'),
     path('addCoffre', views.addCoffre, name='addCoffre'),
+    # delete 
+    path('deleteNts/<int:pk>/', views.deleteNts, name='deleteNts'),
+    # edit 
+    path('editNts/<int:pk>/', views.editNts, name='editNts'),
+    # cbl 
+    path('submitCbl/', views.submitCbl, name='submitCbl'),
+  
+
+ 
+
 
 
 

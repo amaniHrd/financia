@@ -1,0 +1,77 @@
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'index' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+   
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          
+          <!-- Table commission -->
+          <li>
+            <a href="{% url 'listAffilie' %}">
+              <i class="bi bi-circle"></i><span>Table Affiliés</span>
+            </a>
+          </li>
+          <!-- Table auxiliaire -->
+          <li>
+            <a href="{% url 'listNts' %}">
+              <i class="bi bi-circle"></i><span>Table NTS</span>
+            </a>
+          </li>
+             <!-- Table banque -->
+             <li>
+              <a href="{% url 'listBanque' %}">
+                <i class="bi bi-circle"></i><span>Table Banques</span>
+              </a>
+            </li>
+               <!-- Table coffre -->
+          <li>
+            <a href="{% url 'listCoffre' %}">
+              <i class="bi bi-circle"></i><span>Table Coffres</span>
+            </a>
+          </li>
+          <!-- End Tables -->
+
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      <li class="nav-heading">Pages</li>
+
+      <!-- CBl -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'cbl' %}">
+          <i class="bi bi-stickies"></i>
+          <span>Caisse Billetterie</span>
+        </a>
+      </li>
+       <!-- Banque -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'banque' %}">
+          <i class="bi bi-bank"></i>
+          <span>Constatation des banques</span>
+        </a>
+      </li>
+       <!-- coffre -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'coffre' %}">
+          <i class="bi bi-safe"></i>
+          <span>Constation des coffres</span>
+        </a>
+      </li>
+      
+    </ul>
+
+  </aside><!-- End Sidebar-->

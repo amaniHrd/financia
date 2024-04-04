@@ -82,11 +82,15 @@
         </div>
 
         
-            {% if file_name %}
-        <p>Excel file '{{ file_name }}' has been created.</p>
-        <a href="" id="downloadLink" style="display: none;" download="{{ file_name }}">Download Excel</a>
+        <div id="link_container" >
+            {% if file1_link %}
+           <a href="{{ file1_link }}" download="journal17.xlsx" class="download_link" style="color: rgb(22, 50, 111); margin:5px;">Download Jounral17.excel</a>
+            {% endif %}
 
-            {% endif %}  
+            {% if file2_link %}
+           <a href="{{ file2_link }}" download="rapprochement.xlsx" class="download_link" style="color: rgb(22, 50, 111); margin:5px;">Download rapprochement.excel</a>
+            {% endif %}
+            </div> 
             
           </form>
         
